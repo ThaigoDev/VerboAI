@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Legendas para Redes Sociais</title>
+    <!-- Link para a nova folha de estilo -->
+    <link rel="stylesheet" href="CaptionGenerator.css">
+</head>
+<body>
+    <div class="bg-animation"></div>
+    <div class="container">
+        <header class="header">
+            <h1><span class="header-icon">🎯</span> Gerador de Legendas</h1>
+            <p class="description">Crie legendas criativas e autênticas para sua marca.</p>
+        </header>
+
+        <div class="form-container">
+            <form id="captionForm">
+                
+                <div class="form-group">
+                    <label for="nomeMarca">🏢 Nome da Marca</label>
+                    <input type="text" id="nomeMarca" name="nomeMarca" required placeholder="Ex: Astro Café, InovaTech">
+                </div>
+
+                <div class="form-group">
+                    <label for="tema">🎯 Tema Central <span class="required">*</span></label>
+                    <input type="text" id="tema" name="tema" required placeholder="Ex: Lançamento de produto, promoção, bastidores da empresa">
+                </div>
+
+                <div class="form-group">
+                    <label for="objetivo">🧠 Objetivo da Postagem <span class="required">*</span></label>
+                    <select id="objetivo" name="objetivo" required>
+                        <option value="">Selecione um objetivo</option>
+                        <option value="engajar">Engajar o público</option>
+                        <option value="informar">Informar sobre algo</option>
+                        <option value="anunciar">Anunciar uma novidade</option>
+                        <option value="inspirar">Inspirar e motivar</option>
+                        <option value="gerar identificacao">Gerar identificação com a marca</option>
+                        <option value="promover">Promover produto/serviço</option>
+                        <option value="vender">Incentivar uma venda</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>🎭 Tom da Legenda <span class="required">*</span></label>
+                    <div class="tone-grid">
+                        <div class="tone-option">
+                            <input type="radio" id="inspirador" name="tom" value="Inspirador e Ousado" required checked>
+                            <label for="inspirador">✨ Inspirador</label>
+                        </div>
+                        <div class="tone-option">
+                            <input type="radio" id="criativo" name="tom" value="Criativo e Inteligente">
+                            <label for="criativo">😏 Criativo</label>
+                        </div>
+                        <div class="tone-option">
+                            <input type="radio" id="reflexivo" name="tom" value="Reflexivo e Direto">
+                            <label for="reflexivo">🤔 Reflexivo</label>
+                        </div>
+                        <div class="tone-option">
+                            <input type="radio" id="divertido" name="tom" value="Divertido e Leve">
+                            <label for="divertido">😄 Divertido</label>
+                        </div>
+                        <div class="tone-option">
+                            <input type="radio" id="corporativo" name="tom" value="Sério e Corporativo">
+                            <label for="corporativo">👔 Corporativo</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="publico">👤 Público-Alvo Principal <span class="required">*</span></label>
+                    <select id="publico" name="publico" required>
+                        <option value="">Selecione o público</option>
+                        <option value="Novos clientes">Novos clientes</option>
+                        <option value="Clientes existentes">Clientes existentes</option>
+                        <option value="Seguidores engajados">Seguidores engajados</option>
+                        <option value="Profissionais da área">Profissionais da área</option>
+                        <option value="Público em geral">Público em geral</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="palavrasChave">💡 Palavras-chave (Opcional)</label>
+                    <input type="text" id="palavrasChave" name="palavrasChave" placeholder="Ex: café, tecnologia, moda sustentável...">
+                </div>
+
+                <div class="form-group">
+                    <label for="evitar">❌ O que evitar (Opcional)</label>
+                    <input type="text" id="evitar" name="evitar" placeholder="Ex: termos técnicos, jargões, clichês...">
+                </div>
+
+                <div class="form-group">
+                    <label for="observacoes">📎 Observações Adicionais (Opcional)</label>
+                    <textarea id="observacoes" name="observacoes" placeholder="Detalhes importantes, menções específicas, contexto..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    Gerar Legenda Criativa
+                </button>
+            </form>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Criando sua legenda personalizada...</p>
+            </div>
+
+            <div class="error" id="error"></div>
+
+            <div class="result" id="result">
+                <h3 class="result-title">✨ Sua Legenda Gerada:</h3>
+                <div class="result-content" id="resultContent"></div>
+                <button class="copy-btn" id="copyButton">Copiar Legenda</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Link para o JavaScript -->
+    <script src="CaptionGenerator.js"></script>
+</body>
+</html>

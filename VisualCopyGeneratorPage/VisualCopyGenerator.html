@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Copy Visual Premium</title>
+    <!-- Link para a nova folha de estilo unificada -->
+    <link rel="stylesheet" href="VisualCopyGenerator.css">
+</head>
+<body>
+    <div class="bg-animation"></div>
+    <div class="container">
+        <header class="header">
+            <h1><span class="header-icon">🎨</span> Gerador de Copy Visual</h1>
+            <p class="description">Crie textos impactantes para seus designs com este formulário.</p>
+        </header>
+
+        <div class="form-container">
+            <form id="visualCopyForm">
+
+                <div class="form-group">
+                    <label for="nomeMarca">🏢 Nome da Marca/Empresa <span class="required">*</span></label>
+                    <input type="text" id="nomeMarca" name="nomeMarca" placeholder="Ex: Astro Café, InovaTech" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="objetivoPeca">🎯 Objetivo da peça <span class="required">*</span></label>
+                    <select id="objetivoPeca" name="objetivoPeca" required>
+                        <option value="">Selecione o objetivo</option>
+                        <option value="Gerar cliques">Gerar cliques</option>
+                        <option value="Chamar atenção no feed">Chamar atenção no feed</option>
+                        <option value="Converter em leads">Converter em leads</option>
+                        <option value="Inspirar/engajar">Inspirar/engajar</option>
+                        <option value="Informar rapidamente">Informar rapidamente</option>
+                        <option value="Gerar conexão emocional">Gerar conexão emocional</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>🎨 Formato da peça <span class="required">*</span></label>
+                    <div class="option-grid format-grid">
+                        <div class="option-item">
+                            <input type="checkbox" id="formatoPost" name="formatoPeca" value="Post estático" checked>
+                            <label for="formatoPost">Post Estático</label>
+                        </div>
+                        <div class="option-item">
+                            <input type="checkbox" id="formatoCarrossel" name="formatoPeca" value="Carrossel">
+                            <label for="formatoCarrossel">Carrossel</label>
+                        </div>
+                        <div class="option-item">
+                            <input type="checkbox" id="formatoStories" name="formatoPeca" value="Stories">
+                            <label for="formatoStories">Stories</label>
+                        </div>
+                        <div class="option-item">
+                            <input type="checkbox" id="formatoReels" name="formatoPeca" value="Reels/Vídeo">
+                            <label for="formatoReels">Reels/Vídeo</label>
+                        </div>
+                        <div class="option-item">
+                            <input type="checkbox" id="formatoBanner" name="formatoPeca" value="Banner">
+                            <label for="formatoBanner">Banner</label>
+                        </div>
+                        <div class="option-item">
+                            <input type="checkbox" id="formatoAnuncio" name="formatoPeca" value="Anúncio Pago">
+                            <label for="formatoAnuncio">Anúncio Pago</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="temaCentral">🧵 Tema central / Assunto <span class="required">*</span></label>
+                    <input type="text" id="temaCentral" name="temaCentral" placeholder="Ex: Lançamento do produto X, Promoção de inverno" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="mensagemPrincipal">🧠 Mensagem principal <span class="required">*</span></label>
+                    <textarea id="mensagemPrincipal" name="mensagemPrincipal" placeholder="Ex: Nosso produto resolve o problema Y de forma inovadora." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>🧰 Tom da comunicação <span class="required">*</span></label>
+                    <div class="option-grid tone-grid">
+                        <div class="option-item">
+                            <input type="radio" id="tomJovemOusado" name="tomComunicacao" value="Jovem e ousado" required checked>
+                            <label for="tomJovemOusado">Jovem</label>
+                        </div>
+                        <div class="option-item">
+                            <input type="radio" id="tomEmocional" name="tomComunicacao" value="Emocional e aspiracional">
+                            <label for="tomEmocional">Emocional</label>
+                        </div>
+                        <div class="option-item">
+                            <input type="radio" id="tomDireto" name="tomComunicacao" value="Direto e provocativo">
+                            <label for="tomDireto">Direto</label>
+                        </div>
+                        <div class="option-item">
+                            <input type="radio" id="tomCorporativo" name="tomComunicacao" value="Corporativo e elegante">
+                            <label for="tomCorporativo">Corporativo</label>
+                        </div>
+                        <div class="option-item">
+                            <input type="radio" id="tomInspirador" name="tomComunicacao" value="Inspirador e leve">
+                            <label for="tomInspirador">Inspirador</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="headlineDesejada">🧩 Headline ou destaque (Opcional)</label>
+                    <input type="text" id="headlineDesejada" name="headlineDesejada" placeholder="Ex: Inovação que você sente">
+                </div>
+                
+                <div class="form-group">
+                    <label>🖼️ Usar estrutura de storytelling? <span class="required">*</span></label>
+                    <div class="option-grid">
+                        <div class="option-item">
+                            <input type="radio" id="storytellingSim" name="incluirStorytelling" value="sim" required>
+                            <label for="storytellingSim">Sim</label>
+                        </div>
+                        <div class="option-item">
+                            <input type="radio" id="storytellingNao" name="incluirStorytelling" value="não" checked>
+                            <label for="storytellingNao">Não</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="conditional-field" id="storytellingFields">
+                    <div class="form-group">
+                        <label for="ganchoStorytelling">Etapa 1: Gancho (título/frase de impacto)</label>
+                        <input type="text" id="ganchoStorytelling" name="ganchoStorytelling" placeholder="Ex: 'Cansado do comum?'">
+                    </div>
+                    <div class="form-group">
+                        <label for="solucaoStorytelling">Etapa 2: Solução (seu diferencial)</label>
+                        <textarea id="solucaoStorytelling" name="solucaoStorytelling" placeholder="Ex: 'Apresentamos a solução X, que transforma sua rotina.'"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="acaoStorytelling">Etapa 3: Chamada para Ação (CTA)</label>
+                        <input type="text" id="acaoStorytelling" name="acaoStorytelling" placeholder="Ex: 'Clique e descubra!'">
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">Gerar Copy Visual</button>
+            </form>
+
+            <div class="loading" id="loadingState">
+                <div class="spinner"></div>
+                <p>Gerando sua copy visual, por favor aguarde...</p>
+            </div>
+
+            <div class="result" id="resultState">
+                <h3 class="result-title">✨ Copy Visual Gerada:</h3>
+                <div class="result-content" id="copyContent"></div>
+                <button class="copy-btn" id="copyButton">Copiar Copy</button>
+            </div>
+
+            <div class="error" id="errorState"></div>
+        </div>
+    </div>
+
+   <script src="VisualCopyGenerator.js"></script>
+</body>
+</html>

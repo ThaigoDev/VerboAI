@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Conteúdo Profissional</title>
+    <!-- Link para a nova folha de estilo -->
+    <link rel="stylesheet" href="ContentPro.css">
+</head>
+<body>
+    <div class="bg-animation"></div>
+    <div class="container">
+        <header class="header">
+            <h1><span class="header-icon">📰</span> Gerador de Conteúdo Profissional</h1>
+            <p class="description">Crie artigos, notícias e releases com credibilidade e otimização para SEO.</p>
+        </header>
+
+        <div class="form-container">
+            <form id="contentProForm">
+
+                <div class="form-group">
+                    <label for="nomeMarca">🏢 Nome da Marca/Empresa <span class="required">*</span></label>
+                    <input type="text" id="nomeMarca" name="nomeMarca" placeholder="Ex: Astro Café, Consultoria InovaTech" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="temaCentral">🧩 Tema Central do Conteúdo <span class="required">*</span></label>
+                    <input type="text" id="temaCentral" name="temaCentral" placeholder="Ex: Lançamento de nova linha de produtos orgânicos" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="objetivoConteudo">🧭 Objetivo do Conteúdo <span class="required">*</span></label>
+                    <select id="objetivoConteudo" name="objetivoConteudo" required>
+                        <option value="">Selecione o objetivo</option>
+                        <option value="Informar de forma imparcial">Informar (Imparcial)</option>
+                        <option value="Gerar autoridade sobre o tema">Gerar Autoridade</option>
+                        <option value="Atrair visitantes orgânicos (SEO)">Atrair Tráfego (SEO)</option>
+                        <option value="Engajar o público-alvo">Engajar a Comunidade</option>
+                        <option value="Divulgar uma novidade da empresa">Divulgar Novidade</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="palavrasChave">🔍 Palavras-chave para SEO (Opcional)</label>
+                    <input type="text" id="palavrasChave" name="palavrasChave" placeholder="Ex: café especial, software de gestão, consultoria de TI">
+                </div>
+
+                <div class="form-group">
+                    <label>🧱 Estrutura Desejada <span class="required">*</span></label>
+                    <div class="option-grid">
+                        <div class="option-item">
+                            <input type="radio" id="estruturaNoticia" name="estruturaDesejada" value="Notícia (lead, desenvolvimento, desfecho)" required checked>
+                            <label for="estruturaNoticia">Notícia</label>
+                        </div>
+                        <div class="option-item">
+                            <input type="radio" id="estruturaReportagem" name="estruturaDesejada" value="Reportagem (abordagem profunda)">
+                            <label for="estruturaReportagem">Reportagem</label>
+                        </div>
+                        <div class="option-item">
+                            <input type="radio" id="estruturaArtigo" name="estruturaDesejada" value="Artigo de Blog (otimizado para SEO)">
+                            <label for="estruturaArtigo">Artigo de Blog</label>
+                        </div>
+                        <div class="option-item">
+                            <input type="radio" id="estruturaRelease" name="estruturaDesejada" value="Release de imprensa (formato profissional)">
+                            <label for="estruturaRelease">Release</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="publicoAlvo">🧠 Público-alvo <span class="required">*</span></label>
+                    <select id="publicoAlvo" name="publicoAlvo" required>
+                        <option value="">Selecione o público</option>
+                        <option value="Clientes em potencial">Clientes em Potencial</option>
+                        <option value="Clientes atuais">Clientes Atuais</option>
+                        <option value="Investidores ou parceiros">Investidores/Parceiros</option>
+                        <option value="Profissionais da área">Profissionais da Área</option>
+                        <option value="Imprensa e Mídia">Imprensa e Mídia</option>
+                        <option value="Público geral">Público Geral</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>🗞️ Tom da Comunicação <span class="required">*</span></label>
+                    <div class="option-grid">
+                        <div class="option-item">
+                            <input type="radio" id="tomNeutroDireto" name="tomComunicacao" value="Jornalístico neutro e direto" required checked>
+                            <label for="tomNeutroDireto">Neutro</label>
+                        </div>
+                        <div class="option-item">
+                            <input type="radio" id="tomInstitucionalAutoridade" name="tomComunicacao" value="Corporativo com autoridade">
+                            <label for="tomInstitucionalAutoridade">Corporativo</label>
+                        </div>
+                        <div class="option-item">
+                            <input type="radio" id="tomInspiradorHumano" name="tomComunicacao" value="Inspirador e humano">
+                            <label for="tomInspiradorHumano">Inspirador</label>
+                        </div>
+                        <div class="option-item">
+                            <input type="radio" id="tomFormalTecnico" name="tomComunicacao" value="Formal e técnico">
+                            <label for="tomFormalTecnico">Técnico</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="infoObrigatorias">🧾 Informações Obrigatórias <span class="required">*</span></label>
+                    <textarea id="infoObrigatorias" name="infoObrigatorias" placeholder="Ex: Citar o nome do novo produto, incluir dados de uma pesquisa" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>🪪 Assinatura <span class="required">*</span></label>
+                    <div class="option-grid">
+                        <div class="option-item">
+                            <input type="radio" id="assinaturaMarca" name="assinatura" value="Assinatura da marca" required checked>
+                            <label for="assinaturaMarca">Nome da Marca</label>
+                        </div>
+                        <div class="option-item">
+                            <input type="radio" id="assinaturaAutor" name="assinatura" value="Nome de autor específico">
+                            <label for="assinaturaAutor">Autor Específico</label>
+                        </div>
+                        <div class="option-item">
+                            <input type="radio" id="assinaturaNenhuma" name="assinatura" value="Sem assinatura">
+                            <label for="assinaturaNenhuma">Sem Assinatura</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group conditional-field" id="nomeAutorField">
+                    <label for="nomeAutor">Nome do Autor:</label>
+                    <input type="text" id="nomeAutor" name="nomeAutor" placeholder="Nome completo do autor">
+                </div>
+                
+                <button type="submit" class="submit-btn">Gerar Conteúdo</button>
+            </form>
+
+            <div class="loading" id="loadingState">
+                <div class="spinner"></div>
+                <p>Gerando seu conteúdo, por favor aguarde...</p>
+            </div>
+
+            <div class="result" id="resultState">
+                <h3 class="result-title">✨ Conteúdo Gerado:</h3>
+                <div class="result-content" id="copyContent"></div>
+                <button class="copy-btn" id="copyButton">Copiar Conteúdo</button>
+            </div>
+
+            <div class="error" id="errorState"></div>
+        </div>
+    </div>
+
+    <!-- Link para o JavaScript -->
+    <script src="ContentPro.js"></script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+/* Reset básico e tipografia */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #0d0d0d; /* Fundo escuro sólido */
+    color: #e5e7eb; /* cinza-200 do Tailwind */
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* Fundo sutil */
+.bg-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: radial-gradient(circle at 15% 50%, rgba(190, 242, 100, 0.1), transparent 40%),
+                radial-gradient(circle at 85% 30%, rgba(59, 130, 246, 0.1), transparent 40%);
+    animation: bgSway 25s ease-in-out infinite;
+}
+
+@keyframes bgSway {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(10px, 20px) scale(1.05); }
+}
+
+.container {
+    max-width: 1200px;
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px 0;
+    position: relative;
+    z-index: 1;
+}
+
+/* Header */
+.header {
+    text-align: center;
+    padding: 80px 20px 60px;
+}
+
+.header .logo {
+    font-size: 3.5rem;
+    margin-bottom: 24px;
+    display: inline-block;
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0px); }
+}
+
+.header h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 16px;
+    color: #ffffff;
+    letter-spacing: -0.05em;
+}
+
+.header .description {
+    font-size: 1.125rem;
+    color: #9ca3af; /* cinza-400 */
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+    font-weight: 300;
+}
+
+/* Seção de Ferramentas */
+.tools-section {
+    padding: 40px 0;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 48px;
+    color: #f9fafb; /* cinza-50 */
+}
+
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 32px;
+}
+
+.tool-card {
+    background: #18181b; /* cinza-900 mais escuro */
+    border: 1px solid #27272a; /* cinza-800 */
+    border-radius: 16px;
+    padding: 32px;
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.tool-card:hover {
+    transform: translateY(-8px);
+    border-color: #bef264; /* verde-limão-400 */
+    box-shadow: 0 20px 40px rgba(190, 242, 100, 0.1);
+}
+
+.tool-icon {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+.tool-card h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #f9fafb; /* cinza-50 */
+    margin-bottom: 12px;
+}
+
+.tool-card p {
+    color: #a1a1aa; /* cinza-400 */
+    line-height: 1.6;
+    margin-bottom: 24px;
+    font-size: 1rem;
+    font-weight: 300;
+    min-height: 80px; /* Garante alinhamento */
+}
+
+.select-btn {
+    background-color: #bef264; /* verde-limão-400 */
+    color: #18181b; /* cinza-900 */
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    width: 100%;
+    text-align: center;
+}
+
+.select-btn:hover {
+    background-color: #a3e635; /* verde-limão-500 */
+    transform: scale(1.05);
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 40px 0;
+    margin-top: 60px;
+    border-top: 1px solid #27272a; /* cinza-800 */
+}
+
+.footer p {
+    color: #71717a; /* cinza-500 */
+    font-size: 0.9rem;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 2.5rem;
+    }
+    .tools-grid {
+        grid-template-columns: 1fr;
+    }
+    .tool-card p {
+        min-height: auto; /* Remove altura mínima em mobile */
+    }
+}

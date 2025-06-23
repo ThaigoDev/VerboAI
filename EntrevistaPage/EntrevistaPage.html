@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Perguntas para Entrevista</title>
+    <!-- Link para a nova folha de estilo -->
+    <link rel="stylesheet" href="EntrevistaPage.css">
+</head>
+<body>
+    <div class="bg-animation"></div>
+    <div class="container">
+        <header class="header">
+            <h1><span class="header-icon">🎙️</span> Gerador de Perguntas para Entrevista</h1>
+            <p class="description">Preencha os campos para gerar perguntas personalizadas para sua marca ou projeto.</p>
+        </header>
+        <div class="form-container">
+            <form id="interviewForm">
+                
+                <div class="form-group">
+                    <label for="nomeMarca">Nome da Marca/Projeto <span class="required">*</span></label>
+                    <input type="text" id="nomeMarca" name="nomeMarca" placeholder="Ex: Café Astro, Podcast 'InovaMente'" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="tema">Tema da Entrevista <span class="required">*</span></label>
+                    <input type="text" id="tema" name="tema" placeholder="Ex: A jornada do fundador, Inovação em tecnologia" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="publico">Perfil do Entrevistado</label>
+                    <input type="text" id="publico" name="publico" placeholder="Ex: CEO, cliente satisfeito, especialista do setor">
+                </div>
+
+                <div class="form-group">
+                    <label for="quantidade">Quantidade de Perguntas <span class="required">*</span></label>
+                    <input type="number" id="quantidade" name="quantidade" min="1" value="5" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Estilo das Perguntas <span class="required">*</span></label>
+                    <div class="option-grid">
+                        <div class="option-item">
+                            <input type="radio" id="estiloProfundas" name="estilo" value="Profundo e Investigativo" required checked>
+                            <label for="estiloProfundas">🔍 Profundas</label>
+                        </div>
+                        <div class="option-item">
+                            <input type="radio" id="estiloCriativas" name="estilo" value="Criativo e Inovador">
+                            <label for="estiloCriativas">💡 Criativas</label>
+                        </div>
+                        <div class="option-item">
+                            <input type="radio" id="estiloObjetivas" name="estilo" value="Objetivo e Direto">
+                            <label for="estiloObjetivas">🎯 Objetivas</label>
+                        </div>
+                        <div class="option-item">
+                            <input type="radio" id="estiloEmocionais" name="estilo" value="Emocional e Humano">
+                            <label for="estiloEmocionais">💓 Emocionais</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="contexto_adicional">Contexto Adicional (Opcional)</label>
+                    <textarea id="contexto_adicional" name="contexto_adicional" rows="4" placeholder="Ex: A entrevista será para um vídeo de lançamento de produto."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Gerar Perguntas</button>
+            </form>
+
+            <div class="loading" id="loadingMessage">
+                <div class="spinner"></div>
+                <p>Gerando perguntas, aguarde...</p>
+            </div>
+
+            <div class="error" id="errorMessage"></div>
+
+            <div class="result" id="resultSection">
+                <h3 class="result-title">✨ Perguntas Geradas</h3>
+                <div class="result-content" id="interviewQuestions"></div>
+                <button class="copy-btn" id="copyButton">Copiar Perguntas</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Link para o JavaScript -->
+    <script src="EntrevistaPage.js"></script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Roteiros de Vídeo</title>
+    <!-- Link para a folha de estilo unificada -->
+    <link rel="stylesheet" href="ScriptGenerator.css">
+</head>
+<body>
+    <div class="bg-animation"></div>
+    <div class="container">
+        <header class="header">
+            <h1><span class="header-icon">🎬</span> Gerador de Roteiros de Vídeo</h1>
+            <p class="description">Preencha os campos para criar roteiros impactantes e alinhados com a identidade da sua marca.</p>
+        </header>
+
+        <div class="form-container">
+            <form id="roteiroForm">
+
+                <div class="form-group">
+                    <label for="nomeMarca">🏢 Nome da Marca <span class="required">*</span></label>
+                    <input type="text" id="nomeMarca" name="nomeMarca" placeholder="Ex: Astro Café, InovaTech" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="temaVideo">🎯 Tema do vídeo (Reels/Shorts) <span class="required">*</span></label>
+                    <input type="text" id="temaVideo" name="temaVideo" placeholder="Ex: Lançamento do novo café especial da safra de inverno." required>
+                </div>
+
+                <div class="form-group">
+                    <label for="objetivoVideo">🎯 Objetivo do vídeo <span class="required">*</span></label>
+                    <select id="objetivoVideo" name="objetivoVideo" required>
+                        <option value="">Selecione um objetivo</option>
+                        <option value="Informar">Informar</option>
+                        <option value="Atrair clientes">Atrair clientes / Gerar Leads</option>
+                        <option value="Inspirar/Emocionar">Inspirar / Emocionar</option>
+                        <option value="Divulgar produto/serviço">Divulgar produto/serviço</option>
+                        <option value="Aumentar engajamento">Aumentar engajamento</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="publicoAlvo">👥 Público-alvo <span class="required">*</span></label>
+                    <select id="publicoAlvo" name="publicoAlvo" required>
+                        <option value="">Selecione o público</option>
+                        <option value="Clientes em potencial">Clientes em potencial</option>
+                        <option value="Clientes existentes">Clientes existentes</option>
+                        <option value="Investidores">Investidores</option>
+                        <option value="Colaboradores">Colaboradores</option>
+                        <option value="Seguidores em geral">Seguidores em geral</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="duracaoEstimada">🕒 Duração estimada <span class="required">*</span></label>
+                    <input type="text" id="duracaoEstimada" name="duracaoEstimada" placeholder="Ex: 30 segundos, até 1 minuto" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="mensagemPrincipal">📢 Mensagem principal <span class="required">*</span></label>
+                    <textarea id="mensagemPrincipal" name="mensagemPrincipal" placeholder="Qual a mensagem essencial que deve estar presente no roteiro?" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>🧠 Tom de voz desejado <span class="required">*</span></label>
+                    <div class="option-grid">
+                        <div class="option-item">
+                            <input type="radio" id="tomLeveJovem" name="tomDeVoz" value="Leve e jovem" required checked>
+                            <label for="tomLeveJovem">Leve e jovem</label>
+                        </div>
+                        <div class="option-item">
+                            <input type="radio" id="tomDiretoInspirador" name="tomDeVoz" value="Direto e inspirador">
+                            <label for="tomDiretoInspirador">Direto e inspirador</label>
+                        </div>
+                        <div class="option-item">
+                            <input type="radio" id="tomEmocional" name="tomDeVoz" value="Emocional">
+                            <label for="tomEmocional">Emocional</label>
+                        </div>
+                        <div class="option-item">
+                            <input type="radio" id="tomProvocador" name="tomDeVoz" value="Criativo e provocador">
+                            <label for="tomProvocador">Provocador</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="diferencialMarca">🧩 Diferencial da marca a ser evidenciado <span class="required">*</span></label>
+                    <input type="text" id="diferencialMarca" name="diferencialMarca" placeholder="Ex: Qualidade do produto, atendimento, inovação" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="sugestoesCenas">📸 Sugestões de cenas ou imagens (opcional)</label>
+                    <textarea id="sugestoesCenas" name="sugestoesCenas" placeholder="Ex: Close-up do vapor saindo da xícara de café."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Gerar Roteiro</button>
+            </form>
+
+            <div class="loading" id="loadingState">
+                <div class="spinner"></div>
+                <p>Gerando seu roteiro, por favor aguarde...</p>
+            </div>
+
+            <div class="result" id="resultState">
+                <h3 class="result-title">✨ Roteiro Gerado:</h3>
+                <div class="result-content" id="roteiroContent"></div>
+                <button class="copy-btn" id="copyButton">Copiar Roteiro</button>
+            </div>
+
+            <div class="error" id="errorState"></div>
+        </div>
+    </div>
+
+    <!-- Link para o JavaScript -->
+    <script src="ScriptGenerator.js"></script>
+</body>
+</html>

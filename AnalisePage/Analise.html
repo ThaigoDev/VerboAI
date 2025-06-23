@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise de Conteúdo IA</title>
+    <!-- Biblioteca de gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Link para a nova folha de estilo -->
+    <link rel="stylesheet" href="Analise.css">
+</head>
+<body>
+    <div class="bg-animation"></div>
+    <div class="container">
+        <header class="header">
+            <h1><span class="header-icon">📈</span> Análise de Conteúdo IA</h1>
+            <p class="description">Avalie suas legendas, roteiros e textos com base em critérios de marketing e performance.</p>
+        </header>
+        <div class="form-container">
+            <form id="analysisForm">
+                
+                <div class="form-group">
+                    <label for="brandIdentity">Qual a identidade da sua marca? (Opcional, mas recomendado)</label>
+                    <textarea id="brandIdentity" name="brandIdentity" placeholder="Ex: Somos uma marca jovem e ousada que valoriza inovação e sustentabilidade..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="content">Cole o conteúdo para análise <span class="required">*</span></label>
+                    <textarea id="content" name="content" required placeholder="Ex: Legenda para Instagram, roteiro de vídeo, texto para um anúncio, etc."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Analisar Conteúdo</button>
+            </form>
+
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p>Analisando, por favor aguarde...</p>
+            </div>
+
+            <div id="result" class="result">
+                <h3 class="result-title">Resultados da Análise</h3>
+                
+                <!-- Gráficos -->
+                <div class="charts-wrapper">
+                    <div class="chart-container">
+                        <canvas id="analysisChart"></canvas>
+                    </div>
+                    <div id="progressionChartContainer" class="chart-container">
+                        <canvas id="progressionChart"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Seções de Análise Detalhada -->
+                <div class="analysis-details">
+                    <div id="keywordsSection" class="analysis-section">
+                        <h4><span class="icon">🔑</span> Palavras-chave e Relevância</h4>
+                        <ul id="keywordsList"></ul>
+                    </div>
+
+                    <div id="sentimentSection" class="analysis-section">
+                        <h4><span class="icon">😊</span> Sentimento do Conteúdo</h4>
+                        <p id="sentimentText"></p>
+                    </div>
+
+                    <div id="readabilitySection" class="analysis-section">
+                        <h4><span class="icon">📚</span> Nível de Leitura</h4>
+                        <p id="readabilityText"></p>
+                    </div>
+
+                    <div id="titlesSection" class="analysis-section">
+                        <h4><span class="icon">✨</span> Títulos Sugeridos</h4>
+                        <ol id="titlesList"></ol>
+                    </div>
+
+                    <div id="toneSection" class="analysis-section">
+                        <h4><span class="icon">🎭</span> Análise de Tom</h4>
+                        <p id="toneText"></p>
+                    </div>
+                </div>
+
+                <!-- Análise completa em texto -->
+                <div id="result-content" class="result-content"></div>
+                <button id="copyButton" class="copy-btn">Copiar Análise Completa</button>
+            </div>
+
+            <div id="error" class="error">
+                <!-- A mensagem de erro será inserida aqui via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Link para o JavaScript genérico -->
+    <script src="Analise.js"></script>
+</body>
+</html>
