@@ -11,7 +11,6 @@ function redirectTo(tool, event) {
     card.style.transition = 'transform 0.1s ease';
 
     // URLs relativas para cada ferramenta
-    // Certifique-se de que esses caminhos correspondem à estrutura de pastas do seu projeto.
     const urls = {
         'legendas': './CaptionGeneratorPage/CaptionGenerator.html',
         'roteiros': './ScriptGeneratorPage/ScriptGenerator.html',
@@ -58,5 +57,4 @@ function requestTick() {
     }
 }
 
-// Adiciona o listener de scroll apenas uma vez
-window.addEventListener('scroll', requestTick, { passive: true });
+// O event listener para o parallax foi movido para o auth.js para só ser ativado após o login.
