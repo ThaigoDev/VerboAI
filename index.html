@@ -30,69 +30,83 @@
     </div>
 
     <main id="app-content" class="hidden">
-        <div class="container">
-            <header class="header">
+        
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <img src="logo.png" alt="Verbo AI Logo">
+                    <span>Verbo AI</span>
+                </div>
                 <div class="user-info">
                     <span id="user-email"></span>
                     <a href="SettingsPage/settings.html" class="settings-link">
                         <img id="user-avatar" src="placeholder-avatar.png" alt="Avatar do Usuário">
-                        <span>Configurações</span>
                     </a>
                     <button id="logout-btn">Sair</button>
                 </div>
-                <div class="logo"><img src="logo.png" alt="Verbo AI Logo"></div>
-                <p class="description">
-                    Transforme suas ideias em conteúdo extraordinário com nossa suíte de ferramentas inteligentes.
+            </div>
+        </nav>
+
+        <div class="container">
+            <header class="hero-section">
+                <h1 class="hero-title">Sua Central de Criação Inteligente</h1>
+                <p class="hero-description">
+                    Transforme ideias em conteúdo extraordinário com nossa suíte de ferramentas.
                     Criatividade, autenticidade e impacto em cada palavra.
                 </p>
             </header>
 
             <section class="tools-section">
-                <h2 class="section-title">Nossas Ferramentas</h2>
                 <div class="tools-grid">
-                    <div class="tool-card legendas" onclick="redirectTo('legendas', event)">
-                        <div class="tool-icon">📱</div>
-                        <h3>Gerador de Legendas</h3>
-                        <p>Crie legendas magnéticas que param o scroll e convertem seguidores em fãs apaixonados.</p>
-                        <button class="select-btn">Usar Ferramenta</button>
+                    <div class="tool-card card-large-horizontal legendas" onclick="redirectTo('legendas', event)">
+                        <div class="card-content">
+                            <div class="tool-icon">📱</div>
+                            <h3>Gerador de Legendas</h3>
+                            <p>Crie legendas magnéticas que param o scroll e convertem seguidores em fãs apaixonados.</p>
+                        </div>
                     </div>
-                    <div class="tool-card roteiros" onclick="redirectTo('roteiros', event)">
-                        <div class="tool-icon">🎬</div>
-                        <h3>Gerador de Roteiros</h3>
-                        <p>Roteiros para vídeos que prendem a atenção do primeiro ao último segundo.</p>
-                        <button class="select-btn">Usar Ferramenta</button>
+                    <div class="tool-card card-large-horizontal roteiros" onclick="redirectTo('roteiros', event)">
+                        <div class="card-content">
+                            <div class="tool-icon">🎬</div>
+                            <h3>Gerador de Roteiros</h3>
+                            <p>Roteiros para vídeos que prendem a atenção do primeiro ao último segundo.</p>
+                        </div>
                     </div>
                     <div class="tool-card design" onclick="redirectTo('design', event)">
-                        <div class="tool-icon">🎨</div>
-                        <h3>Copy para Design</h3>
-                        <p>Textos que transformam designs em peças de comunicação persuasivas e memoráveis.</p>
-                        <button class="select-btn">Usar Ferramenta</button>
+                        <div class="card-content">
+                            <div class="tool-icon">🎨</div>
+                            <h3>Copy para Design</h3>
+                            <p>Textos que transformam designs em peças de comunicação persuasivas.</p>
+                        </div>
                     </div>
                     <div class="tool-card materias" onclick="redirectTo('materias', event)">
-                        <div class="tool-icon">📰</div>
-                        <h3>Artigos & Blog Posts</h3>
-                        <p>Conteúdo de alta qualidade que informa, engaja e estabelece sua autoridade no assunto.</p>
-                        <button class="select-btn">Usar Ferramenta</button>
+                        <div class="card-content">
+                            <div class="tool-icon">📰</div>
+                            <h3>Artigos & Blog Posts</h3>
+                            <p>Conteúdo de alta qualidade que informa, engaja e estabelece sua autoridade.</p>
+                        </div>
                     </div>
                     <div class="tool-card entrevista" onclick="redirectTo('entrevista', event)">
-                        <div class="tool-icon">🎙️</div>
-                        <h3>Perguntas para Entrevista</h3>
-                        <p>Gere perguntas inteligentes e estratégicas para entrevistas impactantes e reveladoras.</p>
-                        <button class="select-btn">Usar Ferramenta</button>
+                        <div class="card-content">
+                            <div class="tool-icon">🎙️</div>
+                            <h3>Perguntas para Entrevista</h3>
+                            <p>Gere perguntas inteligentes para entrevistas impactantes e reveladoras.</p>
+                        </div>
                     </div>
                     <div class="tool-card analise" onclick="redirectTo('analise', event)">
-                        <div class="tool-icon">📊</div>
-                        <h3>Analisador de Conteúdo</h3>
-                        <p>Obtenha insights sobre o desempenho do seu conteúdo e o potencial de engajamento.</p>
-                        <button class="select-btn">Usar Ferramenta</button>
+                        <div class="card-content">
+                            <div class="tool-icon">📊</div>
+                            <h3>Analisador de Conteúdo</h3>
+                            <p>Obtenha insights sobre o desempenho e o potencial do seu conteúdo.</p>
+                        </div>
                     </div>
                 </div>
             </section>
-
-            <footer class="footer">
-                <p>&copy; 2025 Desenvolvido por THIAGO DUARTE MIRANDA DIAS. Todos os direitos reservados.</p>
-            </footer>
         </div>
+
+        <footer class="footer">
+            <p>&copy; 2025 Desenvolvido por THIAGO DUARTE MIRANDA DIAS. Todos os direitos reservados.</p>
+        </footer>
     </main>
     
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
