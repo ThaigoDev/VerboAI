@@ -1,4 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
+    firebase.auth().onAuthStateChanged(user => {
+        // Só inicializa a lógica da página se o usuário estiver logado
+        if (user) {
+            initializeContentPro(user);
+        }
+    });
+});
+
+function initializeContentPro(user) {
     const form = document.getElementById('contentProForm');
     if (!form) return;
 
@@ -16,19 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     assinaturaRadios.forEach(radio => radio.addEventListener('change', toggleNomeAutorField));
-    toggleNomeAutorField(); // Estado inicial
-
-    // --- VALIDAÇÃO DE CHECKBOXES ---
-    form.addEventListener('submit', function(event) {
-        const canaisCheckboxes = form.querySelectorAll('input[name="canaisDistribuicao"]');
-        if (canaisCheckboxes.length > 0) {
-            const isAnyCanalChecked = Array.from(canaisCheckboxes).some(cb => cb.checked);
-            if (!isAnyCanalChecked) {
-                alert('Por favor, selecione ao menos um canal de distribuição.');
-                event.preventDefault();
-            }
-        }
-    });
+    toggleNomeAutorField();
 
     // --- LÓGICA DE ENVIO DO FORMULÁRIO ---
     form.addEventListener('submit', async function(event) {
@@ -39,22 +36,40 @@ document.addEventListener('DOMContentLoaded', function() {
         const resultState = document.getElementById('resultState');
         const errorState = document.getElementById('errorState');
         const copyContent = document.getElementById('copyContent');
-        const copyButton = document.getElementById('copyButton');
 
         resultState.style.display = 'none';
         errorState.style.display = 'none';
         loadingState.style.display = 'block';
         submitBtn.disabled = true;
-        submitBtn.textContent = 'Gerando...';
+        submitBtn.textContent = 'Consultando identidade...';
 
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
-        data.canaisDistribuicao = formData.getAll('canaisDistribuicao');
-
-        const prompt = createGenericPrompt(data);
-        console.log("Prompt enviado:", prompt);
 
         try {
+            // --- NOVO: BUSCAR DADOS DA MARCA E DO USUÁRIO ---
+            let brandName = user.displayName || user.email;
+            let brandIdentity = '';
+
+            const userRef = firebase.database().ref('users/' + user.uid);
+            const userSnapshot = await userRef.once('value');
+            if (userSnapshot.exists()) {
+                brandName = userSnapshot.val().name || brandName;
+            }
+
+            const brandRef = firebase.database().ref('brandProfiles/' + user.uid);
+            const brandSnapshot = await brandRef.once('value');
+            if (brandSnapshot.exists()) {
+                brandIdentity = brandSnapshot.val().description || '';
+            }
+            // --- FIM DA BUSCA DE DADOS ---
+
+            submitBtn.textContent = 'Gerando...';
+            
+            // MODIFICADO: Passa os dados buscados para a função de prompt
+            const prompt = createGenericPrompt(data, brandName, brandIdentity);
+            console.log("Prompt enviado:", prompt);
+
             // ATENÇÃO: Substitua pela URL do seu backend
             const response = await fetch('https://create-caption-app.onrender.com/gerar-copy-content', {
                 method: 'POST',
@@ -85,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- FUNÇÃO DE COPIAR ---
     const copyButton = document.getElementById('copyButton');
-    if(copyButton){
+    if (copyButton) {
         copyButton.addEventListener('click', (event) => {
             const content = document.getElementById('copyContent').innerText;
             const btn = event.currentTarget;
@@ -103,10 +118,17 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
-});
+}
 
-function createGenericPrompt(data) {
-    let prompt = `Crie uma copy jornalística premium para a marca "${data.nomeMarca}" com base nas seguintes informações:\n\n`;
+// MODIFICADO: Função agora aceita nome e identidade da marca
+function createGenericPrompt(data, brandName, brandIdentity) {
+    let prompt = `Crie um conteúdo profissional para a marca "${brandName}" com base nas seguintes informações:\n\n`;
+
+    if (brandIdentity) {
+        prompt += `**Contexto e Identidade da Marca (use isso como base principal para o tom de voz e estilo):**\n${brandIdentity}\n\n`;
+    }
+
+    prompt += `**Detalhes específicos para este conteúdo:**\n`;
     prompt += `**Tema Central:** ${data.temaCentral}\n`;
     prompt += `**Objetivo do Conteúdo:** ${data.objetivoConteudo}\n`;
     if (data.palavrasChave) {
@@ -116,16 +138,11 @@ function createGenericPrompt(data) {
     prompt += `**Público-alvo:** ${data.publicoAlvo}\n`;
     prompt += `**Tom da Comunicação:** ${data.tomComunicacao}\n`;
     prompt += `**Informações Obrigatórias:** ${data.infoObrigatorias}\n`;
-    prompt += `**Mensagem Principal:** ${data.mensagemPrincipal}\n`;
-    if (data.fonteReferencia) {
-        prompt += `**Fonte/Referência:** ${data.fonteReferencia}\n`;
-    }
     prompt += `**Assinatura:** ${data.assinatura}`;
     if (data.assinatura === 'Nome de autor específico' && data.nomeAutor) {
         prompt += ` - ${data.nomeAutor}`;
     }
-    prompt += `\n**Canais de Distribuição:** ${data.canaisDistribuicao.join(', ')}\n`;
-    prompt += `\n**Instrução:** O texto deve ser informativo, bem estruturado, com credibilidade e otimizado para os objetivos e canais definidos.`;
+    prompt += `\n\n**Instrução:** O texto deve ser informativo, bem estruturado, com credibilidade e otimizado para os objetivos definidos. Siga a estrutura desejada rigorosamente e incorpore a identidade da marca em todo o conteúdo.`;
 
     return prompt;
 }

@@ -3,13 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerador de Legendas para Redes Sociais</title>
-    <!-- Link para a nova folha de estilo -->
+    <title>Gerador de Legendas - Verbo AI</title>
     <link rel="stylesheet" href="CaptionGenerator.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 </head>
 <body>
     <div class="bg-animation"></div>
-    <div class="container">
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="../logo.png" alt="Verbo AI Logo">
+                <span>Verbo AI</span>
+            </div>
+            <div class="user-info">
+                <span id="user-display-name">Carregando...</span>
+                <a href="../SettingsPage/settings.html" class="settings-link" title="Configurações">
+                    <img id="user-avatar-desktop" src="../placeholder-avatar.png" alt="Avatar do Usuário">
+                </a>
+                <button id="logout-btn" title="Sair">Sair</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
         <header class="header">
             <h1><span class="header-icon">🎯</span> Gerador de Legendas</h1>
             <p class="description">Crie legendas criativas e autênticas para sua marca.</p>
@@ -18,11 +35,6 @@
         <div class="form-container">
             <form id="captionForm">
                 
-                <div class="form-group">
-                    <label for="nomeMarca">🏢 Nome da Marca</label>
-                    <input type="text" id="nomeMarca" name="nomeMarca" required placeholder="Ex: Astro Café, InovaTech">
-                </div>
-
                 <div class="form-group">
                     <label for="tema">🎯 Tema Central <span class="required">*</span></label>
                     <input type="text" id="tema" name="tema" required placeholder="Ex: Lançamento de produto, promoção, bastidores da empresa">
@@ -45,26 +57,11 @@
                 <div class="form-group">
                     <label>🎭 Tom da Legenda <span class="required">*</span></label>
                     <div class="tone-grid">
-                        <div class="tone-option">
-                            <input type="radio" id="inspirador" name="tom" value="Inspirador e Ousado" required checked>
-                            <label for="inspirador">✨ Inspirador</label>
-                        </div>
-                        <div class="tone-option">
-                            <input type="radio" id="criativo" name="tom" value="Criativo e Inteligente">
-                            <label for="criativo">😏 Criativo</label>
-                        </div>
-                        <div class="tone-option">
-                            <input type="radio" id="reflexivo" name="tom" value="Reflexivo e Direto">
-                            <label for="reflexivo">🤔 Reflexivo</label>
-                        </div>
-                        <div class="tone-option">
-                            <input type="radio" id="divertido" name="tom" value="Divertido e Leve">
-                            <label for="divertido">😄 Divertido</label>
-                        </div>
-                        <div class="tone-option">
-                            <input type="radio" id="corporativo" name="tom" value="Sério e Corporativo">
-                            <label for="corporativo">👔 Corporativo</label>
-                        </div>
+                        <div class="tone-option"><input type="radio" id="inspirador" name="tom" value="Inspirador e Ousado" required checked><label for="inspirador">✨ Inspirador</label></div>
+                        <div class="tone-option"><input type="radio" id="criativo" name="tom" value="Criativo e Inteligente"><label for="criativo">😏 Criativo</label></div>
+                        <div class="tone-option"><input type="radio" id="reflexivo" name="tom" value="Reflexivo e Direto"><label for="reflexivo">🤔 Reflexivo</label></div>
+                        <div class="tone-option"><input type="radio" id="divertido" name="tom" value="Divertido e Leve"><label for="divertido">😄 Divertido</label></div>
+                        <div class="tone-option"><input type="radio" id="corporativo" name="tom" value="Sério e Corporativo"><label for="corporativo">👔 Corporativo</label></div>
                     </div>
                 </div>
 
@@ -113,9 +110,30 @@
                 <button class="copy-btn" id="copyButton">Copiar Legenda</button>
             </div>
         </div>
-    </div>
+    </main>
 
-    <!-- Link para o JavaScript -->
+    <nav class="mobile-bottom-nav">
+        <a href="../index.html" class="nav-item" aria-label="Hub">
+            <i class="material-icons-outlined">apps</i>
+            <span>Hub</span>
+        </a>
+        <a href="../SettingsPage/settings.html" class="nav-item" aria-label="Configurações">
+            <div id="user-avatar-mobile-container" class="mobile-avatar-wrapper">
+                 <i class="material-icons-outlined">settings</i>
+            </div>
+            <span>Ajustes</span>
+        </a>
+        <button id="mobile-logout-btn" class="nav-item" aria-label="Sair">
+            <i class="material-icons-outlined">logout</i>
+            <span>Sair</span>
+        </button>
+    </nav>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    
+    <script src="../auth.js"></script>
     <script src="CaptionGenerator.js"></script>
 </body>
 </html>

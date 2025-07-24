@@ -3,25 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerador de Perguntas para Entrevista</title>
-    <!-- Link para a nova folha de estilo -->
+    <title>Gerador de Perguntas para Entrevista - Verbo AI</title>
     <link rel="stylesheet" href="EntrevistaPage.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 </head>
 <body>
     <div class="bg-animation"></div>
-    <div class="container">
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="../logo.png" alt="Verbo AI Logo">
+                <span>Verbo AI</span>
+            </div>
+            <div class="user-info">
+                <span id="user-display-name">Carregando...</span>
+                <a href="../SettingsPage/settings.html" class="settings-link" title="Configurações">
+                    <img id="user-avatar-desktop" src="../placeholder-avatar.png" alt="Avatar do Usuário">
+                </a>
+                <button id="logout-btn" title="Sair">Sair</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
         <header class="header">
             <h1><span class="header-icon">🎙️</span> Gerador de Perguntas para Entrevista</h1>
             <p class="description">Preencha os campos para gerar perguntas personalizadas para sua marca ou projeto.</p>
         </header>
+
         <div class="form-container">
             <form id="interviewForm">
                 
-                <div class="form-group">
-                    <label for="nomeMarca">Nome da Marca/Projeto <span class="required">*</span></label>
-                    <input type="text" id="nomeMarca" name="nomeMarca" placeholder="Ex: Café Astro, Podcast 'InovaMente'" required>
-                </div>
-
                 <div class="form-group">
                     <label for="tema">Tema da Entrevista <span class="required">*</span></label>
                     <input type="text" id="tema" name="tema" placeholder="Ex: A jornada do fundador, Inovação em tecnologia" required>
@@ -40,22 +53,10 @@
                 <div class="form-group">
                     <label>Estilo das Perguntas <span class="required">*</span></label>
                     <div class="option-grid">
-                        <div class="option-item">
-                            <input type="radio" id="estiloProfundas" name="estilo" value="Profundo e Investigativo" required checked>
-                            <label for="estiloProfundas">🔍 Profundas</label>
-                        </div>
-                        <div class="option-item">
-                            <input type="radio" id="estiloCriativas" name="estilo" value="Criativo e Inovador">
-                            <label for="estiloCriativas">💡 Criativas</label>
-                        </div>
-                        <div class="option-item">
-                            <input type="radio" id="estiloObjetivas" name="estilo" value="Objetivo e Direto">
-                            <label for="estiloObjetivas">🎯 Objetivas</label>
-                        </div>
-                        <div class="option-item">
-                            <input type="radio" id="estiloEmocionais" name="estilo" value="Emocional e Humano">
-                            <label for="estiloEmocionais">💓 Emocionais</label>
-                        </div>
+                        <div class="option-item"><input type="radio" id="estiloProfundas" name="estilo" value="Profundo e Investigativo" required checked><label for="estiloProfundas">🔍 Profundas</label></div>
+                        <div class="option-item"><input type="radio" id="estiloCriativas" name="estilo" value="Criativo e Inovador"><label for="estiloCriativas">💡 Criativas</label></div>
+                        <div class="option-item"><input type="radio" id="estiloObjetivas" name="estilo" value="Objetivo e Direto"><label for="estiloObjetivas">🎯 Objetivas</label></div>
+                        <div class="option-item"><input type="radio" id="estiloEmocionais" name="estilo" value="Emocional e Humano"><label for="estiloEmocionais">💓 Emocionais</label></div>
                     </div>
                 </div>
 
@@ -80,9 +81,31 @@
                 <button class="copy-btn" id="copyButton">Copiar Perguntas</button>
             </div>
         </div>
-    </div>
+    </main>
 
-    <!-- Link para o JavaScript -->
+    <nav class="mobile-bottom-nav">
+        <a href="../index.html" class="nav-item" aria-label="Hub">
+            <i class="material-icons-outlined">apps</i>
+            <span>Hub</span>
+        </a>
+        <a href="../SettingsPage/settings.html" class="nav-item" aria-label="Configurações">
+            <div id="user-avatar-mobile-container" class="mobile-avatar-wrapper">
+                 <i class="material-icons-outlined">settings</i>
+            </div>
+            <span>Ajustes</span>
+        </a>
+        <button id="mobile-logout-btn" class="nav-item" aria-label="Sair">
+            <i class="material-icons-outlined">logout</i>
+            <span>Sair</span>
+        </button>
+    </nav>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    
+    <script src="../auth.js"></script>
+    
     <script src="EntrevistaPage.js"></script>
 </body>
 </html>

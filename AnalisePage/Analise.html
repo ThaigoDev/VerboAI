@@ -3,32 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Análise de Conteúdo IA</title>
-    <!-- Biblioteca de gráficos -->
+    <title>Análise de Conteúdo IA - Verbo AI</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Link para a nova folha de estilo -->
     <link rel="stylesheet" href="Analise.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 </head>
 <body>
     <div class="bg-animation"></div>
-    <div class="container">
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="../logo.png" alt="Verbo AI Logo">
+                <span>Verbo AI</span>
+            </div>
+            <div class="user-info">
+                <span id="user-display-name">Carregando...</span>
+                <a href="../SettingsPage/settings.html" class="settings-link" title="Configurações">
+                    <img id="user-avatar-desktop" src="../placeholder-avatar.png" alt="Avatar do Usuário">
+                </a>
+                <button id="logout-btn" title="Sair">Sair</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
         <header class="header">
             <h1><span class="header-icon">📈</span> Análise de Conteúdo IA</h1>
             <p class="description">Avalie suas legendas, roteiros e textos com base em critérios de marketing e performance.</p>
         </header>
+        
         <div class="form-container">
             <form id="analysisForm">
-                
-                <div class="form-group">
-                    <label for="brandIdentity">Qual a identidade da sua marca? (Opcional, mas recomendado)</label>
-                    <textarea id="brandIdentity" name="brandIdentity" placeholder="Ex: Somos uma marca jovem e ousada que valoriza inovação e sustentabilidade..."></textarea>
-                </div>
-                
                 <div class="form-group">
                     <label for="content">Cole o conteúdo para análise <span class="required">*</span></label>
                     <textarea id="content" name="content" required placeholder="Ex: Legenda para Instagram, roteiro de vídeo, texto para um anúncio, etc."></textarea>
                 </div>
-
                 <button type="submit" class="submit-btn">Analisar Conteúdo</button>
             </form>
 
@@ -39,57 +49,48 @@
 
             <div id="result" class="result">
                 <h3 class="result-title">Resultados da Análise</h3>
-                
-                <!-- Gráficos -->
                 <div class="charts-wrapper">
-                    <div class="chart-container">
-                        <canvas id="analysisChart"></canvas>
-                    </div>
-                    <div id="progressionChartContainer" class="chart-container">
-                        <canvas id="progressionChart"></canvas>
-                    </div>
+                    <div class="chart-container"><canvas id="analysisChart"></canvas></div>
+                    <div id="progressionChartContainer" class="chart-container"><canvas id="progressionChart"></canvas></div>
                 </div>
-                
-                <!-- Seções de Análise Detalhada -->
                 <div class="analysis-details">
-                    <div id="keywordsSection" class="analysis-section">
-                        <h4><span class="icon">🔑</span> Palavras-chave e Relevância</h4>
-                        <ul id="keywordsList"></ul>
-                    </div>
-
-                    <div id="sentimentSection" class="analysis-section">
-                        <h4><span class="icon">😊</span> Sentimento do Conteúdo</h4>
-                        <p id="sentimentText"></p>
-                    </div>
-
-                    <div id="readabilitySection" class="analysis-section">
-                        <h4><span class="icon">📚</span> Nível de Leitura</h4>
-                        <p id="readabilityText"></p>
-                    </div>
-
-                    <div id="titlesSection" class="analysis-section">
-                        <h4><span class="icon">✨</span> Títulos Sugeridos</h4>
-                        <ol id="titlesList"></ol>
-                    </div>
-
-                    <div id="toneSection" class="analysis-section">
-                        <h4><span class="icon">🎭</span> Análise de Tom</h4>
-                        <p id="toneText"></p>
-                    </div>
+                    <div id="keywordsSection" class="analysis-section"><h4><span class="icon">🔑</span> Palavras-chave e Relevância</h4><ul id="keywordsList"></ul></div>
+                    <div id="sentimentSection" class="analysis-section"><h4><span class="icon">😊</span> Sentimento do Conteúdo</h4><p id="sentimentText"></p></div>
+                    <div id="readabilitySection" class="analysis-section"><h4><span class="icon">📚</span> Nível de Leitura</h4><p id="readabilityText"></p></div>
+                    <div id="titlesSection" class="analysis-section"><h4><span class="icon">✨</span> Títulos Sugeridos</h4><ol id="titlesList"></ol></div>
+                    <div id="toneSection" class="analysis-section"><h4><span class="icon">🎭</span> Análise de Tom</h4><p id="toneText"></p></div>
                 </div>
-
-                <!-- Análise completa em texto -->
                 <div id="result-content" class="result-content"></div>
                 <button id="copyButton" class="copy-btn">Copiar Análise Completa</button>
             </div>
 
-            <div id="error" class="error">
-                <!-- A mensagem de erro será inserida aqui via JS -->
-            </div>
+            <div id="error" class="error"></div>
         </div>
-    </div>
+    </main>
 
-    <!-- Link para o JavaScript genérico -->
+    <nav class="mobile-bottom-nav">
+        <a href="../index.html" class="nav-item" aria-label="Hub">
+            <i class="material-icons-outlined">apps</i>
+            <span>Hub</span>
+        </a>
+        <a href="../SettingsPage/settings.html" class="nav-item" aria-label="Configurações">
+            <div id="user-avatar-mobile-container" class="mobile-avatar-wrapper">
+                 <i class="material-icons-outlined">settings</i>
+            </div>
+            <span>Ajustes</span>
+        </a>
+        <button id="mobile-logout-btn" class="nav-item" aria-label="Sair">
+            <i class="material-icons-outlined">logout</i>
+            <span>Sair</span>
+        </button>
+    </nav>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    
+    <script src="../auth.js"></script>
+    
     <script src="Analise.js"></script>
 </body>
 </html>

@@ -1,11 +1,19 @@
 document.addEventListener('DOMContentLoaded', function() {
+    firebase.auth().onAuthStateChanged(user => {
+        // Só inicializa a lógica da página se o usuário estiver logado
+        if (user) {
+            initializeInterviewTool(user);
+        }
+    });
+});
+
+function initializeInterviewTool(user) {
     const interviewForm = document.getElementById('interviewForm');
     if (!interviewForm) return;
 
     interviewForm.addEventListener('submit', async function(event) {
         event.preventDefault();
 
-        // Seleciona os elementos do DOM
         const form = event.target;
         const submitBtn = form.querySelector('.submit-btn');
         const loadingMessage = document.getElementById('loadingMessage');
@@ -13,37 +21,38 @@ document.addEventListener('DOMContentLoaded', function() {
         const resultSection = document.getElementById('resultSection');
         const interviewQuestions = document.getElementById('interviewQuestions');
 
-        // Reseta a interface do usuário
         if(errorMessage) errorMessage.style.display = 'none';
         if(resultSection) resultSection.style.display = 'none';
         if(loadingMessage) loadingMessage.style.display = 'block';
         submitBtn.disabled = true;
-        submitBtn.textContent = 'Gerando...';
+        submitBtn.textContent = 'Consultando identidade...';
 
-        // Coleta os dados do formulário
         const formData = new FormData(form);
         const data = Object.fromEntries(formData);
 
-        // Cria o prompt genérico para a IA
-        const promptText = `
-            Você é um redator e jornalista especialista em criar perguntas para entrevistas de negócios, marketing e conteúdo.
-
-            Gere **${data.quantidade}** perguntas de entrevista para a marca/projeto **"${data.nomeMarca}"**.
-
-            **Tema da Entrevista:** ${data.tema}
-            **Perfil do Entrevistado:** ${data.publico || 'Não especificado'}
-            **Estilo Desejado para as Perguntas:** ${data.estilo}
-            **Contexto Adicional:** ${data.contexto_adicional || 'Nenhum contexto adicional fornecido.'}
-
-            As perguntas devem ser:
-            * Claras, bem estruturadas e abertas (para incentivar respostas detalhadas).
-            * Alinhadas com o tema e o estilo solicitados.
-            * Formuladas para extrair respostas que sejam relevantes, interessantes e que criem uma conexão com o público-alvo da marca.
-
-            Entregue o resultado como uma lista de perguntas numeradas, de forma clara e direta.
-        `.trim();
-
         try {
+            // --- NOVO: BUSCAR DADOS DA MARCA E DO USUÁRIO ---
+            let brandName = user.displayName || user.email; // Fallback
+            let brandIdentity = '';
+
+            const userRef = firebase.database().ref('users/' + user.uid);
+            const userSnapshot = await userRef.once('value');
+            if (userSnapshot.exists()) {
+                brandName = userSnapshot.val().name || brandName;
+            }
+            
+            const brandRef = firebase.database().ref('brandProfiles/' + user.uid);
+            const brandSnapshot = await brandRef.once('value');
+            if (brandSnapshot.exists()) {
+                brandIdentity = brandSnapshot.val().description || '';
+            }
+            // --- FIM DA BUSCA DE DADOS ---
+            
+            submitBtn.textContent = 'Gerando...';
+            
+            // MODIFICADO: Passa os dados buscados para a função que cria o prompt
+            const promptText = createInterviewPrompt(data, brandName, brandIdentity);
+            
             // ATENÇÃO: Substitua pela URL do seu backend.
             const response = await fetch('https://create-caption-app.onrender.com/gerar-entrevista', {
                 method: 'POST',
@@ -78,21 +87,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Evento de clique para o botão de copiar
     const copyButton = document.getElementById('copyButton');
     if (copyButton) {
         copyButton.addEventListener('click', (event) => {
             const content = document.getElementById('interviewQuestions').innerText;
             const btn = event.currentTarget;
-
             navigator.clipboard.writeText(content).then(() => {
                 const originalText = btn.innerHTML;
                 btn.innerHTML = '✅ Copiado!';
-                btn.style.backgroundColor = '#22c55e'; // Verde
+                btn.style.backgroundColor = '#22c55e';
                 
                 setTimeout(() => {
                     btn.innerHTML = originalText;
-                    btn.style.backgroundColor = ''; // Volta ao padrão do CSS
+                    btn.style.backgroundColor = '';
                 }, 2000);
             }).catch(err => {
                 console.error('Erro ao copiar:', err);
@@ -100,4 +107,26 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
-});
+}
+
+// MODIFICADO: Função agora aceita nome e identidade da marca
+function createInterviewPrompt(data, brandName, brandIdentity) {
+    let prompt = `Você é um redator e jornalista especialista em criar perguntas para entrevistas de negócios, marketing e conteúdo.\n\n`;
+
+    if (brandIdentity) {
+        prompt += `**Contexto e Identidade da Marca (use isso como base para as perguntas):**\n${brandIdentity}\n\n`;
+    }
+
+    prompt += `Gere **${data.quantidade}** perguntas de entrevista para a marca/projeto **"${brandName}"**.\n\n`;
+    prompt += `**Tema da Entrevista:** ${data.tema}\n`;
+    prompt += `**Perfil do Entrevistado:** ${data.publico || 'Não especificado'}\n`;
+    prompt += `**Estilo Desejado para as Perguntas:** ${data.estilo}\n`;
+    prompt += `**Contexto Adicional:** ${data.contexto_adicional || 'Nenhum contexto adicional fornecido.'}\n\n`;
+    prompt += `As perguntas devem ser:\n`;
+    prompt += `* Claras, bem estruturadas e abertas (para incentivar respostas detalhadas).\n`;
+    prompt += `* Alinhadas com o tema e o estilo solicitados, sempre respeitando a identidade da marca.\n`;
+    prompt += `* Formuladas para extrair respostas que sejam relevantes, interessantes e que criem uma conexão com o público-alvo da marca.\n\n`;
+    prompt += `Entregue o resultado como uma lista de perguntas numeradas, de forma clara e direta.`;
+
+    return prompt.trim();
+}
