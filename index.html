@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verbo AI - Hub de Ferramentas</title>
     <link rel="stylesheet" href="main.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 </head>
 <body id="page-hub">
     <div class="bg-animation"></div>
@@ -38,11 +39,11 @@
                     <span>Verbo AI</span>
                 </div>
                 <div class="user-info">
-                    <span id="user-email"></span>
-                    <a href="SettingsPage/settings.html" class="settings-link">
-                        <img id="user-avatar" src="placeholder-avatar.png" alt="Avatar do Usuário">
+                    <span id="user-display-name">Carregando...</span>
+                    <a href="SettingsPage/settings.html" class="settings-link" title="Configurações">
+                        <img id="user-avatar-desktop" src="placeholder-avatar.png" alt="Avatar do Usuário">
                     </a>
-                    <button id="logout-btn">Sair</button>
+                    <button id="logout-btn" title="Sair">Sair</button>
                 </div>
             </div>
         </nav>
@@ -58,28 +59,28 @@
 
             <section class="tools-section">
                 <div class="tools-grid">
-                    <div class="tool-card card-large-horizontal legendas" onclick="redirectTo('legendas', event)">
+                    <div class="tool-card card-large legendas" onclick="redirectTo('legendas', event)">
                         <div class="card-content">
                             <div class="tool-icon">📱</div>
                             <h3>Gerador de Legendas</h3>
                             <p>Crie legendas magnéticas que param o scroll e convertem seguidores em fãs apaixonados.</p>
                         </div>
                     </div>
-                    <div class="tool-card card-large-horizontal roteiros" onclick="redirectTo('roteiros', event)">
+                    <div class="tool-card roteiros" onclick="redirectTo('roteiros', event)">
                         <div class="card-content">
                             <div class="tool-icon">🎬</div>
                             <h3>Gerador de Roteiros</h3>
                             <p>Roteiros para vídeos que prendem a atenção do primeiro ao último segundo.</p>
                         </div>
                     </div>
-                    <div class="tool-card design" onclick="redirectTo('design', event)">
+                     <div class="tool-card design" onclick="redirectTo('design', event)">
                         <div class="card-content">
                             <div class="tool-icon">🎨</div>
                             <h3>Copy para Design</h3>
                             <p>Textos que transformam designs em peças de comunicação persuasivas.</p>
                         </div>
                     </div>
-                    <div class="tool-card materias" onclick="redirectTo('materias', event)">
+                    <div class="tool-card card-large materias" onclick="redirectTo('materias', event)">
                         <div class="card-content">
                             <div class="tool-icon">📰</div>
                             <h3>Artigos & Blog Posts</h3>
@@ -108,6 +109,23 @@
             <p>&copy; 2025 Desenvolvido por THIAGO DUARTE MIRANDA DIAS. Todos os direitos reservados.</p>
         </footer>
     </main>
+
+    <nav class="mobile-bottom-nav">
+        <a href="#" class="nav-item active" aria-label="Hub">
+            <i class="material-icons-outlined">apps</i>
+            <span>Hub</span>
+        </a>
+        <a href="./SettingsPage/settings.html" class="nav-item" aria-label="Configurações">
+            <div id="user-avatar-mobile-container" class="mobile-avatar-wrapper">
+                 <i class="material-icons-outlined">settings</i>
+            </div>
+            <span>Ajustes</span>
+        </a>
+        <button id="mobile-logout-btn" class="nav-item" aria-label="Sair">
+            <i class="material-icons-outlined">logout</i>
+            <span>Sair</span>
+        </button>
+    </nav>
     
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>

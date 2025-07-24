@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Configurações - Verbo AI</title>
     <link rel="stylesheet" href="settings.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 </head>
 <body>
     <div class="bg-animation"></div>
@@ -13,35 +14,33 @@
         <div class="spinner"></div>
     </div>
 
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="../logo.png" alt="Verbo AI Logo">
+                <span>Verbo AI</span>
+            </div>
+            <div class="user-info">
+                <span id="user-display-name">Carregando...</span>
+                <a href="#" class="settings-link" title="Você já está em Configurações">
+                    <img id="user-avatar-desktop" src="../placeholder-avatar.png" alt="Avatar do Usuário">
+                </a>
+                <button id="logout-btn" title="Sair">Sair</button>
+            </div>
+        </div>
+    </nav>
+
     <div id="settings-wrapper" class="hidden">
         <aside class="settings-sidebar">
-            <div class="sidebar-header">
-                <img src="../logo.png" alt="Verbo AI Logo" class="sidebar-logo">
-                <h2>Verbo AI</h2>
-            </div>
             <nav class="sidebar-nav">
                 <ul>
-                    <li>
-                        <a href="#" class="nav-link active" data-target="panel-profile">
-                            <span class="nav-icon">👤</span> Perfil
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-link" data-target="panel-brand">
-                            <span class="nav-icon">🏢</span> Identidade da Marca
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="nav-link" data-target="panel-security">
-                            <span class="nav-icon">🔒</span> Segurança
-                        </a>
-                    </li>
+                    <li><a href="#" class="nav-link active" data-target="panel-profile"><span class="nav-icon">👤</span> Perfil</a></li>
+                    <li><a href="#" class="nav-link" data-target="panel-brand"><span class="nav-icon">🏢</span> Marca</a></li>
+                    <li><a href="#" class="nav-link" data-target="panel-security"><span class="nav-icon">🔒</span> Segurança</a></li>
                 </ul>
             </nav>
             <div class="sidebar-footer">
-                <a href="../index.html" class="nav-btn">
-                    <span class="nav-icon">↩️</span> Voltar ao Início
-                </a>
+                <a href="../index.html" class="nav-btn"><span class="nav-icon">↩️</span> Voltar ao Hub</a>
             </div>
         </aside>
 
@@ -51,7 +50,7 @@
                 <p>Atualize sua foto e nome de exibição.</p>
                 <form id="profile-form" class="settings-form">
                     <div class="profile-pic-container">
-                        <img id="profile-pic-preview" src="placeholder-avatar.png" alt="Foto do Perfil">
+                        <img id="profile-pic-preview" src="../placeholder-avatar.png" alt="Foto do Perfil">
                         <label for="profile-pic-input" class="upload-btn">Trocar Foto</label>
                         <input type="file" id="profile-pic-input" accept="image/png, image/jpeg">
                     </div>
@@ -70,14 +69,14 @@
                 <form id="brand-form" class="settings-form">
                     <div class="input-group">
                         <label for="brandDescription">Descreva sua empresa/marca</label>
-                        <textarea id="brandDescription" rows="10" placeholder="Ex: Somos a [Nome da Empresa], uma startup de tecnologia focada em soluções de IA para marketing digital. Nosso tom de voz é amigável, inovador e direto. Nossos principais clientes são pequenas e médias empresas do setor de e-commerce..."></textarea>
+                        <textarea id="brandDescription" rows="10" placeholder="Ex: Somos a [Nome da Empresa], uma startup..."></textarea>
                     </div>
                     <p id="brand-success" class="success-message"></p>
                     <button type="submit" class="select-btn">Salvar Identidade</button>
                 </form>
             </div>
 
-             <div id="panel-security" class="settings-panel">
+            <div id="panel-security" class="settings-panel">
                 <h1>Segurança</h1>
                 <p>Gerencie sua senha e opções de segurança.</p>
                 <form id="security-form" class="settings-form">
@@ -95,6 +94,29 @@
             </div>
         </main>
     </div>
+
+    <nav class="mobile-bottom-nav">
+        <a href="../index.html" class="nav-item" aria-label="Hub">
+            <i class="material-icons-outlined">apps</i>
+            <span>Hub</span>
+        </a>
+        <a href="#" class="nav-item mobile-nav-link active" data-target="panel-profile" aria-label="Perfil">
+            <i class="material-icons-outlined">person</i>
+            <span>Perfil</span>
+        </a>
+        <a href="#" class="nav-item mobile-nav-link" data-target="panel-brand" aria-label="Marca">
+            <i class="material-icons-outlined">storefront</i>
+            <span>Marca</span>
+        </a>
+        <a href="#" class="nav-item mobile-nav-link" data-target="panel-security" aria-label="Segurança">
+            <i class="material-icons-outlined">lock</i>
+            <span>Segurança</span>
+        </a>
+        <button id="mobile-logout-btn" class="nav-item" aria-label="Sair">
+            <i class="material-icons-outlined">logout</i>
+            <span>Sair</span>
+        </button>
+    </nav>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>

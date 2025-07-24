@@ -1,23 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     // ======================================================
-    // COLE SUAS CONFIGURAÇÕES DO FIREBASE AQUI
+    // SUAS CONFIGURAÇÕES DO FIREBASE E CLOUDINARY
     // ======================================================
-    const firebaseConfig = {
-        apiKey: "AIzaSyCpQCr3T7Y_0xNVyVZEqEy7OCu-M9QHpF4",
-        authDomain: "verbo-ai-5429f.firebaseapp.com",
-        projectId: "verbo-ai-5429f",
-        storageBucket: "verbo-ai-5429f.firebasestorage.app",
-        messagingSenderId: "833449612290",
-        appId: "1:833449612290:web:06cc74ac72ceedcf4c031b",
-        measurementId: "G-Z001ZLPXP2"
-    };
-    
-    // ======================================================
-    // COLE SUAS CREDENCIAIS DO CLOUDINARY AQUI
-    // ======================================================
+    const firebaseConfig = { apiKey: "AIzaSyCpQCr3T7Y_0xNVyVZEqEy7OCu-M9QHpF4", authDomain: "verbo-ai-5429f.firebaseapp.com", projectId: "verbo-ai-5429f", storageBucket: "verbo-ai-5429f.firebasestorage.app", messagingSenderId: "833449612290", appId: "1:833449612290:web:06cc74ac72ceedcf4c031b", measurementId: "G-Z001ZLPXP2" };
     const CLOUDINARY_CLOUD_NAME = 'dt7jg4zci';
-    const CLOUDINARY_UPLOAD_PRESET = 'verbo_ai_preset'; // Ex: 'verbo_ai_preset'
-
+    const CLOUDINARY_UPLOAD_PRESET = 'verbo_ai_preset';
 
     // Inicializa os serviços do Firebase
     firebase.initializeApp(firebaseConfig);
@@ -27,8 +14,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Elementos do DOM ---
     const loadingSpinner = document.getElementById('loading-spinner');
     const settingsWrapper = document.getElementById('settings-wrapper');
-    const navLinks = document.querySelectorAll('.nav-link');
     const settingsPanels = document.querySelectorAll('.settings-panel');
+    
+    // Elementos da Navegação (Desktop e Mobile)
+    const desktopNavLinks = document.querySelectorAll('.settings-sidebar .nav-link');
+    const mobileNavLinks = document.querySelectorAll('.mobile-bottom-nav .mobile-nav-link');
+    const allNavLinks = [...desktopNavLinks, ...mobileNavLinks];
+    
+    // Elementos do Perfil na Navbar Superior
+    const userDisplayName = document.getElementById('user-display-name');
+    const userAvatarDesktop = document.getElementById('user-avatar-desktop');
+    const logoutBtn = document.getElementById('logout-btn');
+    const mobileLogoutBtn = document.getElementById('mobile-logout-btn');
+
+    // Elementos dos Formulários
     const profileForm = document.getElementById('profile-form');
     const profilePicInput = document.getElementById('profile-pic-input');
     const profilePicPreview = document.getElementById('profile-pic-preview');
@@ -41,28 +40,47 @@ document.addEventListener('DOMContentLoaded', () => {
     const brandSaveBtn = brandForm.querySelector('button');
 
     let currentUserId = null;
-    let newProfilePicFile = null; // Variável para guardar o ARQUIVO da nova foto
+    let newProfilePicFile = null;
 
-    // --- Lógica de Navegação ---
-    navLinks.forEach(link => {
+    // --- LÓGICA DE NAVEGAÇÃO UNIFICADA ---
+    const handleNavClick = (clickedLink) => {
+        const targetId = clickedLink.getAttribute('data-target');
+        
+        // Atualiza o estado 'active' para todos os links correspondentes
+        allNavLinks.forEach(link => {
+            if (link.getAttribute('data-target') === targetId) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+
+        // Mostra o painel correto
+        settingsPanels.forEach(p => p.classList.remove('active'));
+        document.getElementById(targetId).classList.add('active');
+    };
+
+    allNavLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
-            navLinks.forEach(l => l.classList.remove('active'));
-            settingsPanels.forEach(p => p.classList.remove('active'));
-            link.classList.add('active');
-            document.getElementById(link.getAttribute('data-target')).classList.add('active');
+            handleNavClick(e.currentTarget);
         });
     });
 
-    // --- Lógica de Autenticação e Dados ---
+    // --- LÓGICA DE AUTENTICAÇÃO E DADOS ---
     auth.onAuthStateChanged(user => {
         if (user) {
             currentUserId = user.uid;
-            displayNameInput.value = user.displayName || '';
-            profilePicPreview.src = user.photoURL || 'placeholder-avatar.png';
+            // Popula a navbar superior com dados do usuário
+            userDisplayName.textContent = user.displayName || user.email;
+            userAvatarDesktop.src = user.photoURL || '../placeholder-avatar.png';
 
-            const brandRef = db.ref('brandProfiles/' + currentUserId);
-            brandRef.once('value').then(snapshot => {
+            // Popula os campos do formulário
+            displayNameInput.value = user.displayName || '';
+            profilePicPreview.src = user.photoURL || '../placeholder-avatar.png';
+
+            // Carrega dados da marca
+            db.ref('brandProfiles/' + currentUserId).once('value').then(snapshot => {
                 if (snapshot.exists()) {
                     brandDescriptionInput.value = snapshot.val().description || '';
                 }
@@ -71,27 +89,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 settingsWrapper.classList.remove('hidden');
             });
         } else {
-            window.location.href = 'index.html';
+            // Se não houver usuário, redireciona para a página principal (que cuidará do login)
+            window.location.href = '../index.html';
         }
     });
-    
-    // --- LÓGICA DE UPLOAD E SALVAMENTO (COM CLOUDINARY) ---
 
-    // Preview da imagem e armazena o arquivo para o upload
+    // --- LÓGICA DE LOGOUT ---
+    const handleLogout = () => auth.signOut();
+    if(logoutBtn) logoutBtn.addEventListener('click', handleLogout);
+    if(mobileLogoutBtn) mobileLogoutBtn.addEventListener('click', handleLogout);
+    
+    // --- LÓGICA DE UPLOAD E SALVAMENTO (Sem alterações) ---
     profilePicInput.addEventListener('change', event => {
         const file = event.target.files[0];
         if (!file || !file.type.startsWith('image/')) return;
-        
-        newProfilePicFile = file; // Guarda o objeto File
-
+        newProfilePicFile = file;
         const reader = new FileReader();
-        reader.onload = e => {
-            profilePicPreview.src = e.target.result; // Mostra o preview
-        };
+        reader.onload = e => { profilePicPreview.src = e.target.result; };
         reader.readAsDataURL(file);
     });
 
-    // Salvar dados do perfil (agora com upload para o Cloudinary)
     profileForm.addEventListener('submit', async (event) => {
         event.preventDefault();
         const user = auth.currentUser;
@@ -100,43 +117,35 @@ document.addEventListener('DOMContentLoaded', () => {
         profileSaveBtn.disabled = true;
         profileSaveBtn.textContent = 'Salvando...';
         profileSuccessMsg.textContent = '';
-
-        let photoUrlToUpdate = user.photoURL; // Começa com a URL atual
+        let photoUrlToUpdate = user.photoURL;
 
         try {
-            // Passo 1: Se uma nova foto foi selecionada, faz o upload para o Cloudinary
             if (newProfilePicFile) {
                 profileSaveBtn.textContent = 'Enviando imagem...';
-                
                 const formData = new FormData();
                 formData.append('file', newProfilePicFile);
                 formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
                 
                 const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
-                    method: 'POST',
-                    body: formData
+                    method: 'POST', body: formData
                 });
-
-                if (!response.ok) {
-                    throw new Error('Falha ao enviar a imagem para o Cloudinary.');
-                }
-
+                if (!response.ok) throw new Error('Falha ao enviar a imagem.');
                 const cloudinaryData = await response.json();
-                // Usamos a secure_url e podemos adicionar transformações!
-                // Ex: "w_200,h_200,c_fill,r_max" para um avatar redondo de 200x200
-                photoUrlToUpdate = cloudinaryData.secure_url; 
-                newProfilePicFile = null; // Limpa o arquivo após o upload
+                photoUrlToUpdate = cloudinaryData.secure_url;
+                newProfilePicFile = null;
             }
 
-            // Passo 2: Atualiza o perfil do Firebase com os novos dados
             profileSaveBtn.textContent = 'Atualizando perfil...';
             await user.updateProfile({
                 displayName: displayNameInput.value,
                 photoURL: photoUrlToUpdate
             });
 
-            profileSuccessMsg.textContent = 'Perfil salvo com sucesso!';
+            // ATUALIZA A NAVBAR SUPERIOR INSTANTANEAMENTE
+            userDisplayName.textContent = displayNameInput.value;
+            userAvatarDesktop.src = photoUrlToUpdate;
 
+            profileSuccessMsg.textContent = 'Perfil salvo com sucesso!';
         } catch (error) {
             console.error("Erro ao salvar perfil:", error);
             profileSuccessMsg.textContent = 'Erro ao salvar perfil.';
@@ -146,18 +155,16 @@ document.addEventListener('DOMContentLoaded', () => {
             profileSaveBtn.textContent = 'Salvar Perfil';
             setTimeout(() => {
                 profileSuccessMsg.textContent = '';
-                profileSuccessMsg.style.color = '#a3e635';
+                profileSuccessMsg.style.color = 'var(--accent-color)';
             }, 4000);
         }
     });
 
-    // Salvar dados da marca (sem alterações na lógica)
     brandForm.addEventListener('submit', event => {
         event.preventDefault();
         if (!currentUserId) return;
         brandSaveBtn.disabled = true;
         brandSaveBtn.textContent = 'Salvando...';
-
         db.ref('brandProfiles/' + currentUserId).set({
             description: brandDescriptionInput.value
         }).then(() => {
@@ -171,7 +178,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // O formulário de segurança continua como exemplo
     document.getElementById('security-form').addEventListener('submit', e => {
         e.preventDefault();
         alert("Função de alterar senha ainda não implementada.");

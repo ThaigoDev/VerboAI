@@ -7,7 +7,7 @@ function redirectTo(tool, event) {
     const card = event.currentTarget;
     
     // Animação de clique
-    card.style.transform = 'scale(0.98)';
+    card.style.transform = 'scale(0.97) translateY(-5px)';
     card.style.transition = 'transform 0.1s ease';
 
     // URLs relativas para cada ferramenta
@@ -25,36 +25,8 @@ function redirectTo(tool, event) {
         if (urls[tool]) {
             window.location.href = urls[tool];
         } else {
-            // Caso uma ferramenta ainda não esteja implementada
             alert(`A ferramenta "${tool}" estará disponível em breve!`);
-            card.style.transform = 'scale(1)'; // Reseta a animação
+            card.style.transform = 'translateY(-10px)'; // Retorna ao estado de hover
         }
     }, 150);
 }
-
-/**
- * Efeito de parallax suave para o fundo.
- * Usa requestAnimationFrame para otimizar a performance.
- */
-let isTicking = false;
-
-function subtleParallax() {
-    const scrolled = window.pageYOffset;
-    const rate = scrolled * -0.1; // Taxa de movimento mais sutil
-    const bgAnimation = document.querySelector('.bg-animation');
-    
-    if (bgAnimation) {
-        bgAnimation.style.transform = `translateY(${rate}px)`;
-    }
-    
-    isTicking = false;
-}
-
-function requestTick() {
-    if (!isTicking) {
-        requestAnimationFrame(subtleParallax);
-        isTicking = true;
-    }
-}
-
-// O event listener para o parallax foi movido para o auth.js para só ser ativado após o login.

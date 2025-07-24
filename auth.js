@@ -1,84 +1,100 @@
-document.addEventListener('DOMContentLoaded', () => {
+// ATENÇÃO: Insira aqui as suas credenciais do Firebase
+const firebaseConfig = { apiKey: "AIzaSyCpQCr3T7Y_0xNVyVZEqEy7OCu-M9QHpF4", authDomain: "verbo-ai-5429f.firebaseapp.com", projectId: "verbo-ai-5429f", storageBucket: "verbo-ai-5429f.firebasestorage.app", messagingSenderId: "833449612290", appId: "1:833449612290:web:06cc74ac72ceedcf4c031b", measurementId: "G-Z001ZLPXP2" };
+// Inicializa o Firebase
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const database = firebase.database();
 
-    // ******************************************************
-    // COLE A CONFIGURAÇÃO DO SEU FIREBASE AQUI
-    // ******************************************************
- const firebaseConfig = {
-  apiKey: "AIzaSyCpQCr3T7Y_0xNVyVZEqEy7OCu-M9QHpF4",
-  authDomain: "verbo-ai-5429f.firebaseapp.com",
-  projectId: "verbo-ai-5429f",
-  storageBucket: "verbo-ai-5429f.firebasestorage.app",
-  messagingSenderId: "833449612290",
-  appId: "1:833449612290:web:06cc74ac72ceedcf4c031b",
-  measurementId: "G-Z001ZLPXP2"
+// --- ELEMENTOS DA PÁGINA ---
+const loginContainer = document.getElementById('login-container');
+const appContent = document.getElementById('app-content');
+const loginForm = document.getElementById('login-form');
+const loginError = document.getElementById('login-error');
+
+// Elementos do perfil do usuário
+const userDisplayName = document.getElementById('user-display-name');
+const userAvatarDesktop = document.getElementById('user-avatar-desktop');
+const mobileAvatarContainer = document.getElementById('user-avatar-mobile-container');
+
+// Botões de Logout
+const logoutBtn = document.getElementById('logout-btn');
+const mobileLogoutBtn = document.getElementById('mobile-logout-btn');
+
+
+// --- FUNÇÕES ---
+
+// Função de Logout
+const handleLogout = () => {
+    auth.signOut().catch(error => console.error('Erro ao sair:', error));
 };
-    // Inicializa o Firebase
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
 
-    // Referências aos elementos do DOM
-    const loginContainer = document.getElementById('login-container');
-    const appContent = document.getElementById('app-content');
-    const loginForm = document.getElementById('login-form');
-    const logoutBtn = document.getElementById('logout-btn');
-    const loginError = document.getElementById('login-error');
-    const userEmailSpan = document.getElementById('user-email');
-    const userAvatar = document.getElementById('user-avatar');
-
-
-    // Listener principal: verifica se o usuário está logado ou não
-    auth.onAuthStateChanged(user => {
-        if (user) {
-            // Usuário está logado
-            loginContainer.classList.add('hidden');
-            appContent.classList.remove('hidden');
-            userEmailSpan.textContent = user.email; // Mostra o e-mail do usuário
-            
-            // Atualiza o avatar do usuário
-            if(user.photoURL) {
-                userAvatar.src = user.photoURL;
-            } else {
-                userAvatar.src = 'placeholder-avatar.png'; // Imagem padrão
-            }
-            
-            // Inicia os scripts do app (como o parallax)
-            if (typeof requestTick === 'function') {
-                window.addEventListener('scroll', requestTick, { passive: true });
-            }
-
-        } else {
-            // Usuário está deslogado
-            loginContainer.classList.remove('hidden');
-            appContent.classList.add('hidden');
+// Função para atualizar a UI com os dados do usuário
+const updateProfileUI = (name, avatarUrl) => {
+    if (userDisplayName) {
+        userDisplayName.textContent = name;
+    }
+    if (userAvatarDesktop) {
+        userAvatarDesktop.src = avatarUrl;
+    }
+    if (mobileAvatarContainer) {
+        const icon = mobileAvatarContainer.querySelector('i');
+        if (icon) icon.style.opacity = '0';
+        let img = mobileAvatarContainer.querySelector('img');
+        if (!img) {
+            img = document.createElement('img');
+            mobileAvatarContainer.appendChild(img);
         }
-    });
+        img.src = avatarUrl;
+        setTimeout(() => img.style.opacity = '1', 50);
+    }
+};
 
-    // Processar o formulário de login
-    loginForm.addEventListener('submit', (e) => {
-        e.preventDefault();
 
-        const email = loginForm.email.value;
-        const password = loginForm.password.value;
-        loginError.textContent = ''; // Limpa erros antigos
+// --- EVENT LISTENERS ---
 
-        auth.signInWithEmailAndPassword(email, password)
-            .then((userCredential) => {
-                // Sucesso! O onAuthStateChanged vai cuidar de mostrar o app.
-                loginForm.reset();
-            })
-            .catch((error) => {
-                // Mostra um erro amigável para o usuário
-                if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
-                    loginError.textContent = 'E-mail ou senha inválidos. Tente novamente.';
-                } else {
-                    loginError.textContent = 'Ocorreu um erro. Tente novamente mais tarde.';
-                }
-            });
-    });
+if (logoutBtn) logoutBtn.addEventListener('click', handleLogout);
+if (mobileLogoutBtn) mobileLogoutBtn.addEventListener('click', handleLogout);
 
-    // Processar o clique no botão de logout
-    logoutBtn.addEventListener('click', () => {
-        auth.signOut();
-    });
+loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    loginError.textContent = '';
 
+    auth.signInWithEmailAndPassword(email, password)
+        .catch(error => {
+            console.error('Erro de login:', error.message);
+            loginError.textContent = 'Email ou senha inválidos. Tente novamente.';
+        });
+});
+
+// --- GERENCIAMENTO DE ESTADO DA AUTENTICAÇÃO ---
+auth.onAuthStateChanged(user => {
+    if (user) {
+        loginContainer.classList.add('hidden');
+        appContent.classList.remove('hidden');
+
+        const userRef = database.ref('users/' + user.uid);
+        userRef.once('value').then(snapshot => {
+            const placeholderAvatar = 'placeholder-avatar.png';
+            let name = user.email; 
+            let avatarUrl = user.photoURL || placeholderAvatar;
+
+            if (snapshot.exists()) {
+                const userData = snapshot.val();
+                name = userData.name || name;
+                avatarUrl = userData.avatarUrl || avatarUrl;
+            }
+            
+            updateProfileUI(name, avatarUrl);
+
+        }).catch(error => {
+            console.error("Erro ao buscar dados do perfil:", error);
+            updateProfileUI(user.email, user.photoURL || 'placeholder-avatar.png');
+        });
+
+    } else {
+        loginContainer.classList.remove('hidden');
+        appContent.classList.add('hidden');
+    }
 });
