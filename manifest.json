@@ -1,0 +1,21 @@
+{
+  "name": "Baymax - Assistente de Saúde",
+  "short_name": "Baymax",
+  "description": "Seu assistente de saúde pessoal para tirar dúvidas e criar lembretes.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#d472e0",
+  "theme_color": "#242030",
+  "icons": [
+    {
+      "src": "loogo-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "logo-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}
